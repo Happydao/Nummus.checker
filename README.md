@@ -1,2 +1,2 @@
 # Nummus.checker
-Nummus.checker
+Nummus.checker test
