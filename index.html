@@ -2,9 +2,39 @@
 <html>
   <head>
     <title>Airdrop Checker</title>
+    <meta charset="UTF-8" />
   </head>
   <body>
-    <h1>Ciao!</h1>
-    <p>Il sito è online 🎉</p>
+    <h1>Airdrop Checker</h1>
+    <button id="connect">🔗 Connetti Wallet Phantom</button>
+    <p id="wallet-address"></p>
+
+    <script>
+      const connectBtn = document.getElementById('connect');
+      const walletInfo = document.getElementById('wallet-address');
+
+      async function connectWallet() {
+        if ('solana' in window) {
+          const provider = window.solana;
+
+          if (provider.isPhantom) {
+            try {
+              const response = await provider.connect();
+              const address = response.publicKey.toString();
+              walletInfo.innerText = "✅ Wallet connesso: " + address;
+            } catch (err) {
+              walletInfo.innerText = "❌ Connessione annullata.";
+            }
+          } else {
+            walletInfo.innerText = "❌ Installa Phantom Wallet.";
+            window.open('https://phantom.app/', '_blank');
+          }
+        } else {
+          walletInfo.innerText = "❌ Phantom Wallet non rilevato.";
+        }
+      }
+
+      connectBtn.addEventListener('click', connectWallet);
+    </script>
   </body>
 </html>
